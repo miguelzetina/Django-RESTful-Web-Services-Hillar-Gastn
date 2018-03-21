@@ -50,7 +50,7 @@ class CompetitionSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'pk',
             'distance_in_feet',
-            'distance_achievement_date',
+            'distance_archievement_date',
             'drone'
         )
 
@@ -96,7 +96,7 @@ class PilotCompetitionSerializer(serializers.ModelSerializer):
             'url',
             'pk',
             'distance_in_feet',
-            'distance_achievement_date',
+            'distance_archievement_date',
             'pilot',
             'drone'
         )

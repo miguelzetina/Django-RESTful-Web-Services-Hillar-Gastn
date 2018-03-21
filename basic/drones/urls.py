@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from drones import views
 
-urlpattern = [
+urlpatterns = [
     url(r'^drone-categories/$',
         views.DroneCategoryList.as_view(),
         name=views.DroneCategoryList.name),
@@ -12,7 +12,7 @@ urlpattern = [
         views.DroneList.as_view(),
         name=views.DroneList.name),
     url(r'^drones/(?P<pk>[0-9]+)$',
-        views.DroneDetails.as_view(),
+        views.DroneDetail.as_view(),
         name=views.DroneDetail.name),
     url(r'^pilots/$',
         views.PilotList.as_view(),

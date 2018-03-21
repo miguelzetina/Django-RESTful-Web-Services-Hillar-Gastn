@@ -24,7 +24,7 @@ class DroneCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     name = 'dronecategory-detail'
 
 
-class DroneListCategory(generics.ListCreateAPIView):
+class DroneList(generics.ListCreateAPIView):
     queryset = Drone.objects.all()
     serializer_class = DroneSerializer
     name = 'drone-list'
