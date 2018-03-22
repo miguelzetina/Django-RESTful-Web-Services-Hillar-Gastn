@@ -13,6 +13,45 @@ from drones.serializers import (DroneCategorySerializer,
                                 )
 
 
+class CompetitionFilter(filters.FilterSet):
+    from_archievement_date = DateTimeFilter(
+        name='distance_archievement_date',
+        lookup_expr='gte'
+    )
+    to_archievement_date = DateTimeFilter(
+        name='distance_archievement_date',
+        lookup_expr='lte'
+    )
+    min_distance_in_feet = NumberFilter(
+        name='distance_in_feet',
+        lookup_expr='gte'
+    )
+    max_distance_in_feet = NumberFilter(
+        name='distance_in_feet',
+        lookup_expr='lte'
+    )
+    drone_name = AllValuesFilter(
+        name='drone__name'
+    )
+    pilot_name = AllValuesFilter(
+        name='pilot__name'
+    )
+
+    class Meta:
+        model = Competition
+        fields = (
+            'distance_in_feet',
+            'from_archievement_date',
+            'to_archievement_date',
+            'min_distance_in_feet',
+            'max_distance_in_feet',
+            # drone__name will be accessed as drone_name
+            'drone_name',
+            # pilot__name will be accessed as pilot_name
+            'pilot_name',
+        )
+
+
 class DroneCategoryList(generics.ListCreateAPIView):
     queryset = DroneCategory.objects.all()
     serializer_class = DroneCategorySerializer
@@ -40,7 +79,7 @@ class DroneList(generics.ListCreateAPIView):
     name = 'drone-list'
     filter_fields = (
         'name',
-        'drone_categpry',
+        'drone_category',
         'manufacturing_date',
         'has_it_competed',
     )
@@ -87,6 +126,11 @@ class CompetitionList(generics.ListCreateAPIView):
     queryset = Competition.objects.all()
     serializer_class = PilotCompetitionSerializer
     name = 'competition-list'
+    filter_class = CompetitionFilter
+    ordering_fields = (
+        'distance_in_feet',
+        'distance_archievement_date',
+    )
 
 
 class CompetitionDetail(generics.RetrieveUpdateDestroyAPIView):
