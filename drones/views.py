@@ -87,6 +87,9 @@ class DroneList(generics.ListCreateAPIView):
         'manufacturing_date',
     )
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 
 class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Drone.objects.all()
