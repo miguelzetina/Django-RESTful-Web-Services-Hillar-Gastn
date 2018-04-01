@@ -6,11 +6,7 @@ from rest_framework.reverse import reverse
 from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 
 from drones.models import DroneCategory, Drone, Pilot, Competition
-from drones.serializers import (DroneCategorySerializer,
-                                DroneSerializer,
-                                PilotSerializer,
-                                PilotCompetitionSerializer
-                                )
+from drones.serializers import *
 
 
 class CompetitionFilter(filters.FilterSet):

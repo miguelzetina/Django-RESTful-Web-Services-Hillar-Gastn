@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from drones.models import DroneCategory, Drone, Pilot, Competition
-from drones import views
+from drones.views import *
 
 
 class DroneCategorySerializer(serializers.HyperlinkedModelSerializer):
