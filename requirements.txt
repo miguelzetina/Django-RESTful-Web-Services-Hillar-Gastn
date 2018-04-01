@@ -1,9 +1,11 @@
 certifi==2018.1.18
 chardet==3.0.4
 Django==1.11.5
+django-filter
 djangorestframework==3.6.4
 httpie==0.9.9
 idna==2.6
+psycopg2
 Pygments==2.2.0
 pytz==2018.3
 requests==2.18.4
