@@ -1,9 +1,11 @@
 from django.shortcuts import render
 
+from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 from rest_framework import filters, generics, permissions
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from django_filters import AllValuesFilter, DateTimeFilter, NumberFilter
 
 from drones.custompermission import *
 from drones.models import DroneCategory, Drone, Pilot, Competition
@@ -122,12 +124,16 @@ class PilotList(generics.ListCreateAPIView):
         'name',
         'races_count'
     )
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = (IsAuthenticated, )
 
 
 class PilotDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Pilot.objects.all()
     serializer_class = PilotSerializer
     name = 'pilot-detail'
+    authentication_classes = (TokenAuthentication, )
+    permission_classes = (IsAuthenticated, )
 
 
 class CompetitionList(generics.ListCreateAPIView):
