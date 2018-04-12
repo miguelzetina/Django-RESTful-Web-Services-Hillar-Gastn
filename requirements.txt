@@ -12,3 +12,6 @@ pytest-django
 pytz==2018.3
 requests==2.18.4
 urllib3==1.22
+
+# Heroku database
+dj-database-url
