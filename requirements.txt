@@ -5,7 +5,7 @@ django-filter
 djangorestframework==3.6.4
 httpie==0.9.9
 idna==2.6
-psycopg2
+psycopg2-binary
 Pygments==2.2.0
 pytest
 pytest-django
