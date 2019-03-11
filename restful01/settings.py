@@ -64,7 +64,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'drones',
         'USER': 'miguelzetina',
-        'PASSWORD': '$Loefthur26',
+        'PASSWORD': '$Lgoefthur26',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -149,3 +149,7 @@ DATABASES['default'] = dj_database_url.config(
 )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+GRAPHENE = {
+    'SCHEMA': 'restful01.schema.schema'
+}

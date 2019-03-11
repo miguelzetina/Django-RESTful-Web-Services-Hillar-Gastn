@@ -46,7 +46,7 @@ urlpatterns = [
         name=views.CompetitionDetail.name
     ),
     url(
-        r'^$',
+        r'^api-root-v2/$',
         views_v2.ApiRootVersion2.as_view(),
         name=views_v2.ApiRootVersion2.name
     ),
