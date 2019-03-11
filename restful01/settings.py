@@ -1,12 +1,13 @@
 import os
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '(hdw6+5r-f#9pk3*=k98iy_%r588y5m+c(!_p^#vfg!s^rm!q&'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -25,9 +26,12 @@ INSTALLED_APPS = [
     'django_filters',
     # Token authentication
     'rest_framework.authtoken',
+    # Graphql
+    'graphene_django'
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -105,7 +109,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS':
@@ -133,6 +143,14 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS':
     'rest_framework.versioning.NamespaceVersioning',
 }
+
+import dj_database_url
+DATABASES['default'] = dj_database_url.config(
+    conn_max_age=600,
+    ssl_require=True
+)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 GRAPHENE = {
     'SCHEMA': 'restful01.schema.schema'
