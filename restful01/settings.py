@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'django_filters',
     # Token authentication
     'rest_framework.authtoken',
+    # Graphql
+    'graphene_django'
 ]
 
 MIDDLEWARE = [
