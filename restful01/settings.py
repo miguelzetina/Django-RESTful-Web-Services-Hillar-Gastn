@@ -62,7 +62,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'drones',
         'USER': 'miguelzetina',
-        'PASSWORD': '$Loefthur26',
+        'PASSWORD': '$Lgoefthur26',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -132,4 +132,8 @@ REST_FRAMEWORK = {
     },
     'DEFAULT_VERSIONING_CLASS':
     'rest_framework.versioning.NamespaceVersioning',
+}
+
+GRAPHENE = {
+    'SCHEMA': 'restful01.schema.schema'
 }

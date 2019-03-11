@@ -7,6 +7,7 @@ from drones import views
 
 class ApiRootVersion2(generics.GenericAPIView):
     name = 'api-root'
+
     def get(self, request, *args, **kwargs):
         return Response({
             'vehicle-categories': reverse(
