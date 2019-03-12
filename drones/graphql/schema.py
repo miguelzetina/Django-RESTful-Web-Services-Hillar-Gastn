@@ -39,9 +39,21 @@ class Query(object):
     all_pilots = graphene.List(PilotType)
     all_competitions = graphene.List(CompetitionType)
 
-    category = graphene.Field(CategoryType)
+    category = graphene.Field(
+        CategoryType, id=graphene.Int(), name=graphene.String()
+    )
 
-    drone = graphene.Field(DroneType)
+    drone = graphene.Field(
+        DroneType, id=graphene.Int(), name=graphene.String()
+    )
+
+    pilot = graphene.Field(
+        PilotType, id=graphene.Int(), name=graphene.String()
+    )
+
+    competition = graphene.Field(
+        CompetitionType, id=graphene.Int()
+    )
 
     def resolve_all_categories(self, info, **kwargs):
         return DroneCategory.objects.all()
@@ -76,6 +88,26 @@ class Query(object):
 
         if name is not None:
             return Drone.objects.get(name=name)
+
+        return None
+
+    def resolve_pilot(self, info, **kwargs):
+        id = kwargs.get('id')
+        name = kwargs.get('name')
+
+        if id is not None:
+            return Drone.objects.get(pk=id)
+
+        if name is not None:
+            return Drone.objects.get(name=name)
+
+        return None
+
+    def resolve_competition(self, info, **kwargs):
+        id = kwargs.get('id')
+
+        if id is not None:
+            return Drone.objects.get(pk=id)
 
         return None
 
