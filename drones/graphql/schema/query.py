@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -+-
 import graphene
 
-from .types import CategoryType, CompetitionType, DroneType, PilotType
+from django.contrib.auth.models import User
+
+from .types import CategoryType, CompetitionType, DroneType, OwnerType, PilotType
 
 from drones.models import Competition, Drone, DroneCategory, Pilot
 
 
 class Query(object):
+
     all_categories = graphene.List(CategoryType)
     all_drones = graphene.List(DroneType)
     all_pilots = graphene.List(PilotType)
     all_competitions = graphene.List(CompetitionType)
+    all_owners = graphene.List(OwnerType)
 
     category = graphene.Field(
         CategoryType, id=graphene.Int(), name=graphene.String()
@@ -28,6 +32,13 @@ class Query(object):
         CompetitionType, id=graphene.Int()
     )
 
+    owner = graphene.Field(
+        OwnerType,
+        id=graphene.Int(),
+        first_name=graphene.String(),
+        last_name=graphene.String()
+    )
+
     def resolve_all_categories(self, info, **kwargs):
         return DroneCategory.objects.all()
 
@@ -39,6 +50,9 @@ class Query(object):
 
     def resolve_all_competitions(self, info, **kwargs):
         return Competition.objects.all()
+
+    def resolve_all_owners(self, info, **kwargs):
+        return User.objects.all()
 
     def resolve_category(self, info, **kwargs):
         id = kwargs.get('id')
@@ -81,5 +95,21 @@ class Query(object):
 
         if id is not None:
             return Competition.objects.get(pk=id)
+
+        return None
+
+    def resolve_owner(self, info, **kwargs):
+        id = kwargs.get('id')
+        first_name = kwargs.get('first_name')
+        last_name = kwargs.get('last_name')
+
+        if id is not None:
+            return User.objects.get(id=id)
+
+        if first_name is not None:
+            return User.objects.get(first_name=first_name)
+
+        if last_name is not None:
+            return User.objects.get(last_name=last_name)
 
         return None

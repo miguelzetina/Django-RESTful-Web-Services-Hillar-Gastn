@@ -17,28 +17,25 @@ class CreatePilot(graphene.Mutation):
         races_count = graphene.Int()
 
     pilot = graphene.Field(PilotType)
-    ok = graphene.Boolean()
 
     @staticmethod
     def mutate(self, info, name, gender, races_count):
         pilot = Pilot.objects.create(
             name=name, gender=gender, races_count=races_count
         )
-        ok = True
-        return CreatePilot(pilot=pilot, ok=ok)
+        return CreatePilot(pilot=pilot)
 
 
 class CreateDroneCategory(graphene.Mutation):
+
     class Arguments:
         name = graphene.String()
 
-    ok = graphene.Boolean()
     drone_category = graphene.Field(CategoryType)
 
     @staticmethod
     def mutate(self, info, name):
         drone_category = DroneCategory.objects.create(name=name)
-        ok = False
         return CreateDroneCategory(drone_category=drone_category)
 
 
