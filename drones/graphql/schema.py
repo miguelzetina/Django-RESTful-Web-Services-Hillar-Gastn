@@ -87,11 +87,11 @@ class CreatePilot(graphene.Mutation):
         gender = GenderChoices()
         races_count = graphene.Int()
 
-    pilot = graphene.Field(lambda: Pilot)
-    Output = Pilot
+    pilot = graphene.Field(lambda: PilotType)
+    Output = PilotType
 
     def mutate(self, info, name, gender, races_count):
-        pilot = Pilot(name=name, gender=gender, races_count=races_count)
+        pilot = PilotType(name=name, gender=gender, races_count=races_count)
         return CreatePilot(pilot=pilot, gender=gender, races_count=races_count)
 
 
