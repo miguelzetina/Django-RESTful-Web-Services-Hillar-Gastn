@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import graphene
 
 from drones.graphql.schema import MyMutations, Query as drone_query
