@@ -24,7 +24,7 @@ class PilotType(DjangoObjectType):
 
 class CompetitionType(DjangoObjectType):
     class Meta:
-        model = Pilot
+        model = Competition
 
 
 class OwnerType(DjangoObjectType):
