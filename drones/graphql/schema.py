@@ -55,7 +55,7 @@ class Query(object):
         return Drone.objects.select_related('drone_category').all()
 
     def resolve_all_pilots(self, info, **kwargs):
-        return Pilot.objects.select_related('competition').all()
+        return Pilot.objects.all()
 
     def resolve_all_competitions(self, info, **kwargs):
         return Competition.objects.all()
