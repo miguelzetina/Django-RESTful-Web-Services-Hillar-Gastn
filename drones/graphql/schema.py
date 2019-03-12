@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from graphene_django.types import DjangoObjectType
 
 from drones.models import DroneCategory, Drone, Pilot, Competition
+from drones.graphql.enums import GenderChoices
 
 
 class CategoryType(DjangoObjectType):
@@ -38,15 +39,9 @@ class Query(object):
     all_pilots = graphene.List(PilotType)
     all_competitions = graphene.List(CompetitionType)
 
-    category = graphene.Field(
-        CategoryType, id=graphene.Int(), name=graphene.String()
-    )
+    category = graphene.Field(CategoryType)
 
-    drone = graphene.Field(
-        DroneType, id=graphene.Int(), name=graphene.String(),
-        manufacturing_date=graphene.types.datetime.DateTime(),
-        inserted_timestamp=graphene.types.datetime.DateTime()
-    )
+    drone = graphene.Field(DroneType)
 
     def resolve_all_categories(self, info, **kwargs):
         return DroneCategory.objects.all()
@@ -83,3 +78,23 @@ class Query(object):
             return Drone.objects.get(name=name)
 
         return None
+
+
+class CreatePilot(graphene.Mutation):
+
+    class Arguments:
+        name = graphene.String()
+        gender = GenderChoices()
+        races_count = graphene.Int()
+
+    pilot = graphene.Field(lambda: Pilot)
+    Output = Pilot
+
+    def mutate(self, info, name, gender, races_count):
+        pilot = Pilot(name=name, gender=gender, races_count=races_count)
+        return CreatePilot(pilot=pilot, gender=gender, races_count=races_count)
+
+
+class MyMutations(graphene.ObjectType):
+
+    create_pilot = CreatePilot.Field()

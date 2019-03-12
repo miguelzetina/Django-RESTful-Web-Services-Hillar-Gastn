@@ -1,6 +1,6 @@
 import graphene
 
-from drones.graphql.schema import Query as drone_query
+from drones.graphql.schema import MyMutations, Query as drone_query
 
 
 class Query(drone_query, graphene.ObjectType):
@@ -8,4 +8,5 @@ class Query(drone_query, graphene.ObjectType):
     # as we begin to add more apps to our project
     pass
 
-schema = graphene.Schema(query=Query)
+
+schema = graphene.Schema(query=Query, mutation=MyMutations)
