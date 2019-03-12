@@ -1,36 +1,9 @@
-# -+- coding: utf-8 -*-
+# -*- coding: utf-8 -+-
 import graphene
 
-from django.contrib.auth.models import User
-from graphene_django.types import DjangoObjectType
+from .types import CategoryType, CompetitionType, DroneType, PilotType
 
-from drones.models import DroneCategory, Drone, Pilot, Competition
-from drones.graphql.enums import GenderChoices
-
-
-class CategoryType(DjangoObjectType):
-    class Meta:
-        model = DroneCategory
-
-
-class DroneType(DjangoObjectType):
-    class Meta:
-        model = Drone
-
-
-class PilotType(DjangoObjectType):
-    class Meta:
-        model = Pilot
-
-
-class CompetitionType(DjangoObjectType):
-    class Meta:
-        model = Competition
-
-
-class OwnerType(DjangoObjectType):
-    class Meta:
-        model = User
+from drones.models import Competition, Drone, DroneCategory, Pilot
 
 
 class Query(object):
@@ -96,10 +69,10 @@ class Query(object):
         name = kwargs.get('name')
 
         if id is not None:
-            return Drone.objects.get(pk=id)
+            return Pilot.objects.get(id=id)
 
         if name is not None:
-            return Drone.objects.get(name=name)
+            return Pilot.objects.get(name=name)
 
         return None
 
@@ -107,26 +80,6 @@ class Query(object):
         id = kwargs.get('id')
 
         if id is not None:
-            return Drone.objects.get(pk=id)
+            return Competition.objects.get(pk=id)
 
         return None
-
-
-class CreatePilot(graphene.Mutation):
-
-    class Arguments:
-        name = graphene.String()
-        gender = GenderChoices()
-        races_count = graphene.Int()
-
-    pilot = graphene.Field(lambda: PilotType)
-    Output = PilotType
-
-    def mutate(self, info, name, gender, races_count):
-        pilot = PilotType(name=name, gender=gender, races_count=races_count)
-        return CreatePilot(pilot=pilot, gender=gender, races_count=races_count)
-
-
-class MyMutations(graphene.ObjectType):
-
-    create_pilot = CreatePilot.Field()
