@@ -1,6 +1,7 @@
 # -+- coding: utf-8 -*-
 import graphene
 
+from django.contrib.auth.models import User
 from graphene_django.types import DjangoObjectType
 
 from drones.models import DroneCategory, Drone, Pilot, Competition
@@ -16,9 +17,26 @@ class DroneType(DjangoObjectType):
         model = Drone
 
 
+class PilotType(DjangoObjectType):
+    class Meta:
+        model = Pilot
+
+
+class CompetitionType(DjangoObjectType):
+    class Meta:
+        model = Pilot
+
+
+class OwnerType(DjangoObjectType):
+    class Meta:
+        model = User
+
+
 class Query(object):
     all_categories = graphene.List(CategoryType)
     all_drones = graphene.List(DroneType)
+    all_pilots = graphene.List(PilotType)
+    all_competitions = graphene.List(CompetitionType)
 
     category = graphene.Field(
         CategoryType, id=graphene.Int(), name=graphene.String()
@@ -35,6 +53,12 @@ class Query(object):
 
     def resolve_all_drones(self, info, **kwargs):
         return Drone.objects.select_related('drone_category').all()
+
+    def resolve_all_pilots(self, info, **kwargs):
+        return Pilot.objects.select_related('competition').all()
+
+    def resolve_all_competitions(self, info, **kwargs):
+        return Competition.objects.all()
 
     def resolve_category(self, info, **kwargs):
         id = kwargs.get('id')
