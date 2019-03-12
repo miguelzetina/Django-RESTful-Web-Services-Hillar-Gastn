@@ -1,0 +1,16 @@
+[
+  {
+    "model": "drones.dronecategory",
+    "pk": 1,
+    "fields": {
+      "name": "Quadcopter"
+    }
+  },
+  {
+    "model":"drones.dronecategory",
+    "pk": 2,
+    "fields": {
+      "name": "Helicopter"
+    }
+  }
+]
